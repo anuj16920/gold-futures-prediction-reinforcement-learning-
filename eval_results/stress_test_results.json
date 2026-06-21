@@ -1,0 +1,287 @@
+{
+  "generalist": {
+    "clean": {
+      "total_return_pct": -9.2,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.28,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 3,
+      "calmar": -225.595,
+      "halted_at_bar": 80,
+      "final_capital": 9080.02
+    },
+    "high_friction": {
+      "total_return_pct": -10.3,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 11.1,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 3,
+      "calmar": -233.833,
+      "halted_at_bar": 78,
+      "final_capital": 8970.02
+    },
+    "worst_case": {
+      "total_return_pct": -9.8,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.34,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 2,
+      "calmar": -238.883,
+      "halted_at_bar": 77,
+      "final_capital": 9020.04
+    },
+    "randomized": {
+      "total_return_pct": -9.62,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.59,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 3,
+      "calmar": -228.756,
+      "halted_at_bar": 78,
+      "final_capital": 9038.41
+    },
+    "val_set": {
+      "total_return_pct": -10.4,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.49,
+      "win_rate_pct": 16.7,
+      "profit_factor": 0.019,
+      "total_trades": 6,
+      "calmar": -249.848,
+      "halted_at_bar": 391,
+      "final_capital": 8960.05
+    }
+  },
+  "trend": {
+    "clean": {
+      "total_return_pct": -14.3,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 15.32,
+      "win_rate_pct": 38.5,
+      "profit_factor": 0.314,
+      "total_trades": 13,
+      "calmar": -235.287,
+      "halted_at_bar": 440,
+      "final_capital": 8569.82
+    },
+    "high_friction": {
+      "total_return_pct": -10.2,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.74,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 8,
+      "calmar": -239.439,
+      "halted_at_bar": 397,
+      "final_capital": 8979.79
+    },
+    "worst_case": {
+      "total_return_pct": -11.1,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 11.1,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 7,
+      "calmar": -252.0,
+      "halted_at_bar": 109,
+      "final_capital": 8889.83
+    },
+    "randomized": {
+      "total_return_pct": -9.17,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.17,
+      "win_rate_pct": 20.0,
+      "profit_factor": 0.132,
+      "total_trades": 10,
+      "calmar": -227.249,
+      "halted_at_bar": 414,
+      "final_capital": 9082.53
+    },
+    "val_set": {
+      "total_return_pct": -9.9,
+      "sharpe": -920837724.619,
+      "max_drawdown_pct": 10.08,
+      "win_rate_pct": 25.0,
+      "profit_factor": 0.357,
+      "total_trades": 12,
+      "calmar": -247.506,
+      "halted_at_bar": 788,
+      "final_capital": 9009.93
+    }
+  },
+  "range_sr": {
+    "clean": {
+      "total_return_pct": -9.4,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 9.4,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 3,
+      "calmar": -252.0,
+      "halted_at_bar": 77,
+      "final_capital": 9060.0
+    },
+    "high_friction": {
+      "total_return_pct": -10.3,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.3,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 3,
+      "calmar": -252.0,
+      "halted_at_bar": 77,
+      "final_capital": 8970.0
+    },
+    "worst_case": {
+      "total_return_pct": -10.3,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.3,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 2,
+      "calmar": -252.0,
+      "halted_at_bar": 76,
+      "final_capital": 8970.01
+    },
+    "randomized": {
+      "total_return_pct": -9.89,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 9.89,
+      "win_rate_pct": 0.0,
+      "profit_factor": 0.0,
+      "total_trades": 3,
+      "calmar": -252.0,
+      "halted_at_bar": 77,
+      "final_capital": 9011.21
+    },
+    "val_set": {
+      "total_return_pct": -6.2,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.24,
+      "win_rate_pct": 30.0,
+      "profit_factor": 0.403,
+      "total_trades": 10,
+      "calmar": -152.602,
+      "halted_at_bar": 422,
+      "final_capital": 9379.89
+    }
+  },
+  "volatility": {
+    "clean": {
+      "total_return_pct": -10.2,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 11.27,
+      "win_rate_pct": 30.0,
+      "profit_factor": 0.357,
+      "total_trades": 10,
+      "calmar": -228.166,
+      "halted_at_bar": 411,
+      "final_capital": 8980.03
+    },
+    "high_friction": {
+      "total_return_pct": -7.9,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 8.72,
+      "win_rate_pct": 25.0,
+      "profit_factor": 0.156,
+      "total_trades": 8,
+      "calmar": -228.257,
+      "halted_at_bar": 109,
+      "final_capital": 9210.08
+    },
+    "worst_case": {
+      "total_return_pct": -10.0,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 10.54,
+      "win_rate_pct": 14.3,
+      "profit_factor": 0.034,
+      "total_trades": 7,
+      "calmar": -239.158,
+      "halted_at_bar": 107,
+      "final_capital": 9000.09
+    },
+    "randomized": {
+      "total_return_pct": -10.31,
+      "sharpe": 0.0,
+      "max_drawdown_pct": 11.15,
+      "win_rate_pct": 22.2,
+      "profit_factor": 0.251,
+      "total_trades": 9,
+      "calmar": -232.967,
+      "halted_at_bar": 397,
+      "final_capital": 8968.75
+    },
+    "val_set": {
+      "total_return_pct": 8.9,
+      "sharpe": 8.09,
+      "max_drawdown_pct": 10.52,
+      "win_rate_pct": 40.7,
+      "profit_factor": 1.08,
+      "total_trades": 27,
+      "calmar": 213.249,
+      "halted_at_bar": 1568,
+      "final_capital": 10890.03
+    }
+  },
+  "ensemble_vote": {
+    "clean": {
+      "total_return_pct": 0.9,
+      "sharpe": 1301787157.289,
+      "max_drawdown_pct": 11.88,
+      "win_rate_pct": 44.4,
+      "profit_factor": 1.219,
+      "total_trades": 18,
+      "calmar": 19.093,
+      "halted_at_bar": 811,
+      "final_capital": 10090.0
+    },
+    "high_friction": {
+      "total_return_pct": -6.5,
+      "sharpe": 158822590.909,
+      "max_drawdown_pct": 11.37,
+      "win_rate_pct": 38.9,
+      "profit_factor": 0.855,
+      "total_trades": 18,
+      "calmar": -144.005,
+      "halted_at_bar": 806,
+      "final_capital": 9350.0
+    },
+    "worst_case": {
+      "total_return_pct": -9.1,
+      "sharpe": -984141975.471,
+      "max_drawdown_pct": 9.64,
+      "win_rate_pct": 35.7,
+      "profit_factor": 0.705,
+      "total_trades": 14,
+      "calmar": -237.819,
+      "halted_at_bar": 457,
+      "final_capital": 9090.04
+    },
+    "randomized": {
+      "total_return_pct": -1.07,
+      "sharpe": 843875494.218,
+      "max_drawdown_pct": 10.63,
+      "win_rate_pct": 38.9,
+      "profit_factor": 1.031,
+      "total_trades": 18,
+      "calmar": -25.44,
+      "halted_at_bar": 806,
+      "final_capital": 9892.67
+    },
+    "val_set": {
+      "total_return_pct": 11.9,
+      "sharpe": 7.139,
+      "max_drawdown_pct": 10.26,
+      "win_rate_pct": 40.0,
+      "profit_factor": 1.405,
+      "total_trades": 40,
+      "calmar": 292.149,
+      "halted_at_bar": 1998,
+      "final_capital": 11190.03
+    }
+  }
+}

@@ -38,7 +38,8 @@ checkpoints/**/*.pth
 
 # ── Training artefacts ────────────────────────────────────────────────────────
 training_logs/
-eval_results/**/*
+eval_results/**/*.npy
+eval_results/**/*.parquet
 !eval_results/.gitkeep
 
 # ── Norm stats & metadata (generated, not source) ────────────────────────────
