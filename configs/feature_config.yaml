@@ -1,0 +1,17 @@
+# §3 — Feature engineering configuration
+# M1 base features
+return_lookbacks: [1, 5, 20]
+ma_windows: [20]
+vol_window: 20
+
+# Multi-timeframe
+mtf_timeframes: ["5min", "15min", "30min", "1h", "4h"]
+
+# S/R features
+pivot_window: 5
+atr_window: 14
+test_threshold_ticks: 5
+tick_size: 0.10
+
+# Normalization
+clip_std: 5.0

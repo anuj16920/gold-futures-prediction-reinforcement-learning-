@@ -1,0 +1,11 @@
+# §15 — Live paper trading configuration
+dataset: "GLBX.MDP3"
+schema: "trades"
+symbols: ["GC*"]
+
+# Databento API key should be set via environment variable:
+# export DATABENTO_API_KEY=your_key_here
+
+friction_mode: "deterministic"
+log_interval_seconds: 60
+reconciliation_interval_hours: 24

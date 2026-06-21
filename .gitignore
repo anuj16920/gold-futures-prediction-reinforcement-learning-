@@ -1,0 +1,60 @@
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.env
+.venv
+venv/
+env/
+
+# ── Data files (too large for GitHub) ────────────────────────────────────────
+# Raw Databento zip archive (2.1 GB)
+*.zip
+
+# Raw tick parquet (878 MB)
+data/raw/*.parquet
+data/raw/*.csv
+data/raw/*.zst
+
+# Processed large files
+data/processed/*.parquet
+data/processed/*.npy
+
+# Keep directory structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# ── Model checkpoints ─────────────────────────────────────────────────────────
+checkpoints/**/*.zip
+checkpoints/**/*.pkl
+checkpoints/**/*.pt
+checkpoints/**/*.pth
+!checkpoints/.gitkeep
+
+# ── Training artefacts ────────────────────────────────────────────────────────
+training_logs/
+eval_results/**/*
+!eval_results/.gitkeep
+
+# ── Norm stats & metadata (generated, not source) ────────────────────────────
+# Keep these — small JSON files, useful for reproducibility
+# data/processed/norm_stats.json   ← INCLUDED (small, important)
+# data/processed/metadata.json     ← INCLUDED (small, important)
+
+# ── Temp / OS ─────────────────────────────────────────────────────────────────
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb

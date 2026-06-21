@@ -1,0 +1,14 @@
+# §1 — Data configuration
+roll_logic:
+  min_roll_days: 1
+  volume_threshold_ratio: 1.0  # Next contract must exceed current by this ratio
+
+timeframe: "1min"
+
+session:
+  timezone: "America/New_York"
+  start_hour: 18  # 6 PM ET Sunday
+  end_hour: 17    # 5 PM ET Friday
+  maintenance_start: 17  # 5 PM ET daily
+  maintenance_end: 18    # 6 PM ET daily
+  exclude_maintenance: true

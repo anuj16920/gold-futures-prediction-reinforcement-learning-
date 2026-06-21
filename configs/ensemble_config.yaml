@@ -1,0 +1,47 @@
+# §11-12 — Ensemble configuration
+specialists:
+  trend:
+    target_regime: 0
+    regime_weights:
+      trending: 3.0
+      ranging: 0.5
+      high_volatility: 0.5
+    learning_rate: 1.0e-4
+    ent_coef: 0.02
+    reward_shaping:
+      hold_bonus: 0.01
+  range_sr:
+    target_regime: 2
+    regime_weights:
+      trending: 0.5
+      ranging: 3.0
+      high_volatility: 0.5
+    learning_rate: 1.0e-4
+    ent_coef: 0.02
+    reward_shaping: {}
+  volatility_event:
+    target_regime: 3
+    regime_weights:
+      trending: 0.5
+      ranging: 0.5
+      high_volatility: 3.0
+    learning_rate: 1.0e-4
+    ent_coef: 0.03
+    reward_shaping:
+      risk_penalty: 0.02
+
+voting:
+  default_weights:
+    trend: 1.0
+    range_sr: 1.0
+    volatility_event: 1.0
+
+meta_policy:
+  hidden_dim: 64
+  learning_rate: 1.0e-3
+  epochs: 100
+
+performance_tracker:
+  window_size: 100
+  win_rate_threshold: 0.4
+  downweight_factor: 0.5

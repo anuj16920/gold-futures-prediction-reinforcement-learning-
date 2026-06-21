@@ -1,0 +1,25 @@
+# GC Gold Futures RL Trading System — dependencies
+# Install with: pip install -r requirements.txt
+
+# Data ingestion
+zstandard>=0.21.0          # read .zst compressed Databento files
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=14.0.0            # parquet read/write
+
+# RL training
+gymnasium>=0.29.0          # OpenAI Gym successor (Gymnasium)
+stable-baselines3>=2.2.0   # PPO implementation
+torch>=2.1.0               # neural nets (CPU or CUDA)
+
+# Config
+pyyaml>=6.0
+
+# Visualization / dashboard
+plotly>=5.18.0
+
+# Optional: faster HMM regime detection
+# hmmlearn>=0.3.0
+
+# Dev / testing
+pytest>=7.0.0

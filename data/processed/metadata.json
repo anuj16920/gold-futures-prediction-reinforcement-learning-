@@ -1,0 +1,42 @@
+{
+  "total_bars": 1176650,
+  "n_features": 19,
+  "feature_names": [
+    "ret_1",
+    "ret_5",
+    "ret_20",
+    "ma_20_ratio",
+    "vol_20",
+    "atr_14",
+    "mtf_5min_ret_1",
+    "mtf_5min_vol",
+    "mtf_15min_ret_1",
+    "mtf_15min_vol",
+    "mtf_30min_ret_1",
+    "mtf_30min_vol",
+    "mtf_1h_ret_1",
+    "mtf_1h_vol",
+    "mtf_4h_ret_1",
+    "mtf_4h_vol",
+    "dist_to_support",
+    "near_resistance",
+    "near_support"
+  ],
+  "splits": {
+    "train": {
+      "start": "2023-01-18 00:00:00+00:00",
+      "end": "2024-12-31 00:00:00+00:00",
+      "bars": 671439
+    },
+    "val": {
+      "start": "2025-01-01 23:00:00+00:00",
+      "end": "2025-09-30 00:00:00+00:00",
+      "bars": 255202
+    },
+    "test": {
+      "start": "2025-10-01 00:00:00+00:00",
+      "end": "2026-06-19 00:00:00+00:00",
+      "bars": 246356
+    }
+  }
+}

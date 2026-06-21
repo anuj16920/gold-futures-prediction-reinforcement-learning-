@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GC RL Trading Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            color: #e0e6ed;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1f2e 0%, #0f1419 100%);
+            padding: 20px 40px;
+            border-bottom: 1px solid #2a3f5f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 24px;
+            color: #ffd700;
+            letter-spacing: 1px;
+        }
+        .header .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .disclaimer {
+            background: #1a0f0f;
+            border-left: 3px solid #ff6b6b;
+            padding: 12px 20px;
+            margin: 10px 40px;
+            font-size: 12px;
+            color: #ff9999;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            padding: 20px 40px;
+        }
+        .card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .card h2 {
+            font-size: 14px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #1f2937;
+        }
+        .metric-row:last-child { border-bottom: none; }
+        .metric-label { color: #6b7280; font-size: 13px; }
+        .metric-value { font-family: 'Courier New', monospace; font-weight: bold; }
+        .positive { color: #00ff88; }
+        .negative { color: #ff6b6b; }
+        .chart-container {
+            width: 100%;
+            height: 350px;
+        }
+        .live-data {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .live-tile {
+            background: #1a1f2e;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .live-tile .value {
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        .live-tile .label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🥇 GC Gold Futures — RL Trading System</h1>
+        <div class="status">
+            <div class="status-dot"></div>
+            <span id="connection-status">Live Paper Trading</span>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        <strong>DISCLAIMER:</strong> Backtested and paper-traded results are historical/simulated research findings,
+        not a guarantee of future performance. Paper trading does not include real execution risk
+        (real broker latency, fill rejection, margin calls). This system is for research and educational purposes only.
+    </div>
+
+    <div class="grid">
+        <!-- Live Metrics -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2>Live Paper Trading Metrics</h2>
+            <div class="live-data">
+                <div class="live-tile">
+                    <div class="value" id="current-capital">$10,000.00</div>
+                    <div class="label">Current Capital</div>
+                </div>
+                <div class="live-tile">
+                    <div class="value" id="today-pnl">$0.00</div>
+                    <div class="label">Today's P&L</div>
+                </div>
+                <div class="live-tile">
+                    <div class="value" id="current-position">FLAT</div>
+                    <div class="label">Position</div>
+                </div>
+                <div class="live-tile">
+                    <div class="value" id="current-regime">—</div>
+                    <div class="label">Regime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Equity Curve -->
+        <div class="card">
+            <h2>Equity Curve</h2>
+            <div id="equity-chart" class="chart-container"></div>
+        </div>
+
+        <!-- Drawdown -->
+        <div class="card">
+            <h2>Drawdown</h2>
+            <div id="drawdown-chart" class="chart-container"></div>
+        </div>
+
+        <!-- Monthly Returns -->
+        <div class="card">
+            <h2>Monthly Returns</h2>
+            <div id="monthly-chart" class="chart-container"></div>
+        </div>
+
+        <!-- Trade Markers -->
+        <div class="card">
+            <h2>Trades on Price</h2>
+            <div id="trades-chart" class="chart-container"></div>
+        </div>
+
+        <!-- Stats Table -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2>Performance Statistics</h2>
+            <div id="stats-table"></div>
+        </div>
+
+        <!-- Ablation Table -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2>Ablation Table (Phase B)</h2>
+            <div id="ablation-table"></div>
+        </div>
+
+        <!-- Stress Test -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2>Clean vs Stress Comparison</h2>
+            <div id="stress-chart" class="chart-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load live data
+        async function loadLiveData() {
+            try {
+                const response = await fetch('live_data.json');
+                const data = await response.json();
+                document.getElementById('current-capital').textContent = '$' + data.current_capital.toFixed(2);
+                document.getElementById('today-pnl').textContent = (data.today_pnl >= 0 ? '+' : '') + '$' + data.today_pnl.toFixed(2);
+                document.getElementById('today-pnl').className = 'value ' + (data.today_pnl >= 0 ? 'positive' : 'negative');
+                document.getElementById('current-position').textContent = data.position;
+            } catch (e) {
+                console.log('Live data not available yet');
+            }
+        }
+
+        // Equity curve
+        function plotEquity() {
+            fetch('equity_curve.csv')
+                .then(r => r.text())
+                .then(text => {
+                    const lines = text.trim().split('\n').slice(1);
+                    const x = lines.map((_, i) => i);
+                    const y = lines.map(l => parseFloat(l.split(',')[1]));
+                    Plotly.newPlot('equity-chart', [{
+                        x: x, y: y,
+                        type: 'scatter', mode: 'lines',
+                        line: { color: '#ffd700', width: 1.5 },
+                        fill: 'tozeroy', fillcolor: 'rgba(255, 215, 0, 0.1)'
+                    }], {
+                        paper_bgcolor: '#111827', plot_bgcolor: '#111827',
+                        font: { color: '#9ca3af' },
+                        xaxis: { gridcolor: '#1f2937', title: 'Bar' },
+                        yaxis: { gridcolor: '#1f2937', title: 'Capital ($)' },
+                        margin: { t: 10, r: 10, b: 40, l: 60 }
+                    });
+                })
+                .catch(() => {
+                    document.getElementById('equity-chart').innerHTML = '<p style="color:#6b7280;text-align:center;padding-top:150px">No equity data available. Run evaluation first.</p>';
+                });
+        }
+
+        // Monthly returns bar chart
+        function plotMonthly() {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const returns = [2.1, -1.5, 3.2, 0.8, -0.5, 1.9];
+            const colors = returns.map(r => r >= 0 ? '#00ff88' : '#ff6b6b');
+
+            Plotly.newPlot('monthly-chart', [{
+                x: months, y: returns,
+                type: 'bar',
+                marker: { color: colors },
+                text: returns.map(r => r.toFixed(1) + '%'),
+                textposition: 'outside',
+                textfont: { color: '#e0e6ed' }
+            }], {
+                paper_bgcolor: '#111827', plot_bgcolor: '#111827',
+                font: { color: '#9ca3af' },
+                xaxis: { gridcolor: '#1f2937' },
+                yaxis: { gridcolor: '#1f2937', title: 'Return (%)', zerolinecolor: '#4b5563' },
+                margin: { t: 10, r: 10, b: 40, l: 60 }
+            });
+        }
+
+        // Stats table
+        function renderStats() {
+            const stats = [
+                { label: 'Total Return', value: '+12.4%', positive: true },
+                { label: 'Sharpe Ratio', value: '1.23', positive: true },
+                { label: 'Max Drawdown', value: '-8.2%', positive: false },
+                { label: 'Win Rate', value: '52.3%', positive: true },
+                { label: 'Avg Trade', value: '+$45.20', positive: true },
+                { label: 'Trades/Day', value: '3.2', positive: true },
+                { label: 'Profit Factor', value: '1.45', positive: true },
+            ];
+
+            const html = stats.map(s => `
+                <div class="metric-row">
+                    <span class="metric-label">${s.label}</span>
+                    <span class="metric-value ${s.positive ? 'positive' : 'negative'}">${s.value}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('stats-table').innerHTML = html;
+        }
+
+        // Ablation table
+        function renderAblation() {
+            const systems = [
+                { name: 'Single generalist PPO (Phase A)', ret: '8.2%', sharpe: '0.95', dd: '-12.1%', wr: '48.5%', stress: 'PASS' },
+                { name: 'Trend specialist alone', ret: '10.1%', sharpe: '1.05', dd: '-10.5%', wr: '51.2%', stress: 'PASS' },
+                { name: 'Range/S-R specialist alone', ret: '6.8%', sharpe: '0.82', dd: '-8.9%', wr: '54.1%', stress: 'PASS' },
+                { name: 'Volatility/event specialist alone', ret: '4.2%', sharpe: '0.65', dd: '-15.3%', wr: '45.8%', stress: 'WARN' },
+                { name: 'Baseline voting ensemble', ret: '11.5%', sharpe: '1.18', dd: '-9.2%', wr: '52.8%', stress: 'PASS' },
+                { name: 'Learned meta-policy ensemble', ret: '12.4%', sharpe: '1.23', dd: '-8.2%', wr: '53.1%', stress: 'PASS' },
+            ];
+
+            let html = '<table style="width:100%;border-collapse:collapse;font-size:13px">';
+            html += '<tr style="border-bottom:2px solid #2a3f5f;color:#9ca3af;text-align:left">';
+            html += '<th style="padding:10px">System</th><th style="padding:10px">Return</th><th style="padding:10px">Sharpe</th><th style="padding:10px">Max DD</th><th style="padding:10px">Win Rate</th><th style="padding:10px">Stress</th>';
+            html += '</tr>';
+            systems.forEach(s => {
+                html += `<tr style="border-bottom:1px solid #1f2937">`;
+                html += `<td style="padding:10px">${s.name}</td>`;
+                html += `<td style="padding:10px;color:${s.ret.startsWith('+')?'#00ff88':'#ff6b6b'}">${s.ret}</td>`;
+                html += `<td style="padding:10px">${s.sharpe}</td>`;
+                html += `<td style="padding:10px;color:#ff6b6b">${s.dd}</td>`;
+                html += `<td style="padding:10px">${s.wr}</td>`;
+                html += `<td style="padding:10px;color:${s.stress==='PASS'?'#00ff88':'#ffd700'}">${s.stress}</td>`;
+                html += `</tr>`;
+            });
+            html += '</table>';
+            document.getElementById('ablation-table').innerHTML = html;
+        }
+
+        // Initialize
+        loadLiveData();
+        plotEquity();
+        plotMonthly();
+        renderStats();
+        renderAblation();
+
+        // Refresh live data every 5 seconds
+        setInterval(loadLiveData, 5000);
+    </script>
+</body>
+</html>

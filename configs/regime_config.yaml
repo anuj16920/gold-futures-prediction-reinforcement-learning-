@@ -1,0 +1,15 @@
+# §10 — Regime detection configuration
+n_regimes: 4
+method: "hmm"  # "hmm" or "gmm"
+window: 20
+
+regime_names:
+  - "trending_up"
+  - "trending_down"
+  - "ranging"
+  - "high_volatility"
+
+rule_based:
+  adx_threshold: 25.0
+  atr_percentile: 0.8
+  bollinger_width_threshold: 0.02

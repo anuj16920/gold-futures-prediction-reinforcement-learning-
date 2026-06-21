@@ -1,0 +1,12 @@
+{
+  "last_updated": "2024-01-01T00:00:00Z",
+  "current_capital": 10000.0,
+  "today_pnl": 0.0,
+  "position": "FLAT",
+  "regime": "ranging",
+  "specialist_weights": {
+    "trend": 1.0,
+    "range_sr": 1.0,
+    "volatility_event": 1.0
+  }
+}
