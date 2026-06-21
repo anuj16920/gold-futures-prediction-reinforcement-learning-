@@ -46,14 +46,20 @@ class Backtester:
 
     def __init__(self, model: PPO, features: np.ndarray, prices: np.ndarray,
                  regime: np.ndarray, env_cfg: dict, friction: dict,
-                 obs_window: int = 60):
+                 obs_window: int = 60,
+                 atr_feature_idx: int = 5,    # index of atr_14 in feature vector
+                 atr_mean: float = 0.0,        # denorm: raw_atr = feat*std + mean
+                 atr_std:  float = 1.0):
         self.model    = model
         self.features = features.astype(np.float32)
         self.prices   = prices.astype(np.float32)
         self.regime   = regime.astype(np.int8)
-        self.env_cfg  = env_cfg
-        self.friction = friction
+        self.env_cfg   = env_cfg
+        self.friction  = friction
         self.obs_window = obs_window
+        self.atr_idx   = atr_feature_idx
+        self.atr_mean  = atr_mean
+        self.atr_std   = atr_std
 
         risk = env_cfg.get("risk", {})
         self.max_dd      = risk.get("guard", {}).get("max_drawdown_pct", 0.10)
@@ -129,7 +135,7 @@ class Backtester:
                         capital -= cost
                         entry_px = px
                         # ATR proxy: use vol feature (index 4) * price
-                        atr = max(float(self.features[t, 4]) * px * 0.01, 1.0)
+                        atr = max(float(self.features[t, self.atr_idx]) * self.atr_std + self.atr_mean, 1.0)
                         if target == 1:
                             sl = entry_px - self.atr_sl * atr
                             tp = entry_px + self.atr_tp * atr
@@ -425,6 +431,21 @@ def main():
         sys.exit(1)
 
     obs_window = env_cfg.get("observation", {}).get("window", 60)
+
+    # Load ATR denorm stats so the backtester uses real ATR values
+    norm_path = data_dir / "norm_stats.json"
+    atr_mean, atr_std, atr_idx = 0.0, 1.0, 5
+    if norm_path.exists():
+        with open(norm_path) as f:
+            ns = json.load(f)
+        feat_names = list(ns["mean"].keys())
+        atr_key    = "atr_14"
+        if atr_key in feat_names:
+            atr_idx  = feat_names.index(atr_key)
+            atr_mean = float(ns["mean"][atr_key])
+            atr_std  = float(ns["std"][atr_key])
+        logger.info("ATR denorm: idx=%d mean=%.4f std=%.4f", atr_idx, atr_mean, atr_std)
+
     results    = {}
 
     # ------------------------------------------------------------------ #
@@ -437,13 +458,15 @@ def main():
         for scenario, friction in FRICTION_PRESETS.items():
             logger.info("  scenario: %s", scenario)
             bt = Backtester(model, test_f, test_p, test_r,
-                            env_cfg, friction, obs_window)
+                            env_cfg, friction, obs_window,
+                            atr_feature_idx=atr_idx, atr_mean=atr_mean, atr_std=atr_std)
             results[name][scenario] = bt.run()
 
         # Validation set (clean friction)
         logger.info("  scenario: val_set")
         bt = Backtester(model, val_f, val_p, val_r,
-                        env_cfg, FRICTION_PRESETS["clean"], obs_window)
+                        env_cfg, FRICTION_PRESETS["clean"], obs_window,
+                        atr_feature_idx=atr_idx, atr_mean=atr_mean, atr_std=atr_std)
         results[name]["val_set"] = bt.run()
 
     # ------------------------------------------------------------------ #

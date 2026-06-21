@@ -20,9 +20,14 @@ import pandas as pd
 
 from src.features.base_features import (
     compute_atr,
+    compute_bollinger,
     compute_ma_features,
+    compute_macd,
     compute_returns,
+    compute_rsi,
+    compute_time_features,
     compute_volatility,
+    compute_volume_ratio,
 )
 from src.features.mtf_features import MTFFeatureEngineer
 from src.features.sr_features import SRFeatureEngineer
@@ -124,7 +129,13 @@ class FeaturePipeline:
             compute_ma_features(close, self.ma_windows),
             compute_volatility(close, self.vol_window).to_frame(),
             compute_atr(high, low, close, self.atr_window).to_frame(),
+            compute_rsi(close).to_frame(),
+            compute_macd(close),
+            compute_bollinger(close),
         ]
+        if "volume" in df.columns:
+            parts.append(compute_volume_ratio(df["volume"]).to_frame())
+        parts.append(compute_time_features(df.index))
 
         # MTF features (anti-leakage: shift(1) inside MTFFeatureEngineer)
         mtf_input = df.reset_index().rename(columns={df.index.name or "index": "timestamp"})

@@ -11,13 +11,13 @@ contract:
 
 risk:
   sl_tp:
-    atr_sl: 1.5
-    atr_tp: 3.0
+    atr_sl: 2.0
+    atr_tp: 4.0
   guard:
-    max_drawdown_pct: 0.10
-    min_account_floor: 5000.0
-    max_trades_per_day: 10
-    cooldown_bars: 5
+    max_drawdown_pct: 0.15   # widened: 10% was too tight for early training
+    min_account_floor: 3000.0
+    max_trades_per_day: 20
+    cooldown_bars: 3
 
 friction:
   deterministic:
