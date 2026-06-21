@@ -1,4 +1,4 @@
-# Gold Futures RL Trading System
+# Gold Futures RL Trading System.
 
 Reinforcement learning system for CME Gold (GC) futures using ensemble specialist PPO agents and regime-adaptive trading.
 
